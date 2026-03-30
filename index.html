@@ -8,114 +8,100 @@
 </head>
 <body class="bg-pink-50 font-sans">
 
-  <!-- Header com logo -->
-  <header class="bg-pink-400 text-white p-5 text-center shadow">
-    <img src="/mnt/data/Logotipo Laços de Fita de Cabelo Delicado Amarelo.png" class="mx-auto w-32 mb-2">
-    <h1 class="text-3xl font-bold">Laços da Lays</h1>
-    <p class="text-sm">Feito com amor 💖</p>
+  <!-- Header -->
+  <header class="bg-pink-400 text-white p-5 flex justify-between items-center shadow">
+    <h1 class="text-2xl font-bold">Laços da Lays</h1>
+    <div class="relative">🛒 <span id="contador" class="absolute -top-2 -right-2 bg-white text-pink-500 text-xs px-2 rounded-full">0</span></div>
   </header>
 
+  <!-- Busca + Filtro -->
+  <section class="p-4 bg-white shadow flex flex-col md:flex-row gap-3">
+    <input id="busca" onkeyup="filtrar()" type="text" placeholder="Buscar produto..." class="p-2 border rounded w-full">
+    <select id="filtro" onchange="filtrar()" class="p-2 border rounded">
+      <option value="todos">Todos</option>
+      <option value="laco">Laços</option>
+      <option value="tiara">Tiara</option>
+      <option value="presilha">Presilha</option>
+      <option value="xuxinha">Xuxinha</option>
+    </select>
+  </section>
+
   <!-- Produtos -->
-  <section class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+  <section id="produtos" class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <div class="bg-white rounded-2xl shadow p-4 text-center">
-      <img src="https://via.placeholder.com/200" class="mx-auto mb-3 rounded-xl">
-      <h2 class="font-bold">Laço</h2>
-      <p class="text-pink-500">R$ 10</p>
-      <button onclick="addCarrinho('Laço',10)" class="mt-2 bg-pink-400 text-white px-4 py-2 rounded">Adicionar</button>
+    <div class="produto bg-white p-4 rounded shadow" data-nome="laço vermelho" data-tipo="laco">
+      <h2>Laço</h2>
+      <p>R$ 10</p>
+      <button onclick="addCarrinho('Laço',10)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
     </div>
 
-    <div class="bg-white rounded-2xl shadow p-4 text-center">
-      <img src="https://via.placeholder.com/200" class="mx-auto mb-3 rounded-xl">
-      <h2 class="font-bold">Xuxinha</h2>
-      <p class="text-pink-500">R$ 8</p>
-      <button onclick="addCarrinho('Xuxinha',8)" class="mt-2 bg-pink-400 text-white px-4 py-2 rounded">Adicionar</button>
+    <div class="produto bg-white p-4 rounded shadow" data-nome="tiara floral" data-tipo="tiara">
+      <h2>Tiara</h2>
+      <p>R$ 20</p>
+      <button onclick="addCarrinho('Tiara',20)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
     </div>
 
-    <div class="bg-white rounded-2xl shadow p-4 text-center">
-      <img src="https://via.placeholder.com/200" class="mx-auto mb-3 rounded-xl">
-      <h2 class="font-bold">Presilha</h2>
-      <p class="text-pink-500">R$ 12</p>
-      <button onclick="addCarrinho('Presilha',12)" class="mt-2 bg-pink-400 text-white px-4 py-2 rounded">Adicionar</button>
+    <div class="produto bg-white p-4 rounded shadow" data-nome="presilha rosa" data-tipo="presilha">
+      <h2>Presilha</h2>
+      <p>R$ 12</p>
+      <button onclick="addCarrinho('Presilha',12)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
+    </div>
+
+    <div class="produto bg-white p-4 rounded shadow" data-nome="xuxinha colorida" data-tipo="xuxinha">
+      <h2>Xuxinha</h2>
+      <p>R$ 8</p>
+      <button onclick="addCarrinho('Xuxinha',8)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
     </div>
 
   </section>
 
   <!-- Carrinho -->
   <section class="p-6 bg-white m-6 rounded-xl shadow">
-    <h2 class="text-xl font-bold mb-3">Carrinho 🛒</h2>
+    <h2 class="text-xl font-bold">Carrinho</h2>
     <ul id="carrinho"></ul>
-    <p class="mt-2 font-bold">Total: R$ <span id="total">0</span></p>
-
-    <button onclick="finalizarCompra()" class="mt-4 bg-green-500 text-white px-6 py-3 rounded-full">
-      Finalizar pelo WhatsApp
-    </button>
+    <p>Total: R$ <span id="total">0</span></p>
   </section>
 
-  <!-- PIX -->
-  <section class="p-6 m-6 bg-pink-100 rounded-xl">
-    <h2 class="text-xl font-bold">Pagamento via PIX 💸</h2>
-    <p>Chave PIX: 27998346411</p>
-  </section>
-
-  <!-- Entrega -->
-  <section class="p-6 m-6 bg-white rounded-xl">
-    <h2 class="text-xl font-bold">Entrega 🚚</h2>
-    <input id="endereco" type="text" placeholder="Digite seu endereço" class="p-2 w-full rounded border">
-  </section>
-
-  <!-- Cadastro realista (frontend) -->
-  <section class="p-6 m-6 bg-pink-100 rounded-xl">
-    <h2 class="text-xl font-bold">Criar Conta 💖</h2>
-    <input id="nome" type="text" placeholder="Nome" class="block mb-2 p-2 w-full rounded">
-    <input id="email" type="email" placeholder="Email" class="block mb-2 p-2 w-full rounded">
-    <input id="senha" type="password" placeholder="Senha" class="block mb-2 p-2 w-full rounded">
-    <button onclick="cadastrar()" class="bg-pink-400 text-white px-4 py-2 rounded">Cadastrar</button>
-  </section>
-
-  <!-- Botões -->
-  <div class="text-center my-8 space-x-4">
-    <a href="https://wa.me/5527998346411" target="_blank" class="bg-green-500 text-white px-6 py-3 rounded-full">WhatsApp</a>
-    <a href="https://www.instagram.com/lacosda_lays/" target="_blank" class="bg-pink-500 text-white px-6 py-3 rounded-full">Instagram</a>
-  </div>
-
-  <!-- Script -->
   <script>
     let total = 0;
-    let carrinhoItens = [];
+    let contador = 0;
 
     function addCarrinho(nome, preco) {
-      carrinhoItens.push({nome, preco});
       const lista = document.getElementById('carrinho');
       const item = document.createElement('li');
-      item.textContent = nome + ' - R$ ' + preco;
+      item.innerHTML = `${nome} - R$ ${preco} <button onclick="this.parentElement.remove(); atualizar(-${preco}, -1)">❌</button>`;
       lista.appendChild(item);
-      total += preco;
+      atualizar(preco,1);
+    }
+
+    function atualizar(valor,qtd){
+      total += valor;
+      contador += qtd;
       document.getElementById('total').textContent = total;
+      document.getElementById('contador').textContent = contador;
     }
 
-    function finalizarCompra() {
-      let mensagem = 'Pedido:%0A';
-      carrinhoItens.forEach(item => {
-        mensagem += item.nome + ' - R$ ' + item.preco + '%0A';
+    function filtrar(){
+      let busca = document.getElementById('busca').value.toLowerCase();
+      let filtro = document.getElementById('filtro').value;
+      let produtos = document.querySelectorAll('.produto');
+
+      produtos.forEach(p => {
+        let nome = p.dataset.nome;
+        let tipo = p.dataset.tipo;
+
+        let matchBusca = nome.includes(busca);
+        let matchFiltro = filtro === 'todos' || tipo === filtro;
+
+        if(matchBusca && matchFiltro){
+          p.style.display = 'block';
+        } else {
+          p.style.display = 'none';
+        }
       });
-      mensagem += 'Total: R$ ' + total + '%0A';
-
-      let endereco = document.getElementById('endereco').value;
-      if(endereco){
-        mensagem += 'Endereço: ' + endereco;
-      }
-
-      window.open('https://wa.me/5527998346411?text=' + mensagem);
-    }
-
-    function cadastrar() {
-      let nome = document.getElementById('nome').value;
-      alert('Bem-vinda, ' + nome + '! 💖 Cadastro realizado com sucesso!');
     }
   </script>
 
-  <!-- Footer -->
   <footer class="bg-pink-400 text-white text-center p-4">
     <p>© 2026 - Laços da Lays</p>
   </footer>
