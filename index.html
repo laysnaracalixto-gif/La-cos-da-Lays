@@ -14,34 +14,44 @@
 </header>
 
 <section class="p-4">
-  <input id="busca" onkeyup="filtrar()" placeholder="Buscar...">
+  <input id="busca" onkeyup="filtrar()" placeholder="Buscar..." class="p-2 border rounded w-full mb-2">
   
-  <select id="filtro" onchange="filtrar()">
+  <select id="filtro" onchange="filtrar()" class="p-2 border rounded w-full">
     <option value="todos">Todos</option>
     <option value="laco">Laços</option>
-    <option value="tiara">Tiara</option>
+    <option value="tiara">Arco/Tiara</option>
     <option value="presilha">Presilha</option>
     <option value="xuxinha">Xuxinha</option>
   </select>
 </section>
 
-<section id="produtos">
+<section id="produtos" class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<div class="produto" data-nome="laço rosa" data-tipo="laco">
-  <p>Laço - R$10</p>
-  <button onclick="addCarrinho('Laço',10)">Adicionar</button>
+<div class="produto bg-white p-4 rounded shadow" data-nome="laço rosa" data-tipo="laco">
+  <p>Laço - R$12</p>
+  <button onclick="addCarrinho('Laço',12)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
 </div>
 
-<div class="produto" data-nome="xuxinha azul" data-tipo="xuxinha">
+<div class="produto bg-white p-4 rounded shadow" data-nome="xuxinha azul" data-tipo="xuxinha">
   <p>Xuxinha - R$8</p>
-  <button onclick="addCarrinho('Xuxinha',8)">Adicionar</button>
+  <button onclick="addCarrinho('Xuxinha',8)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
+</div>
+
+<div class="produto bg-white p-4 rounded shadow" data-nome="presilha rosa" data-tipo="presilha">
+  <p>Presilha - R$10</p>
+  <button onclick="addCarrinho('Presilha',10)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
+</div>
+
+<div class="produto bg-white p-4 rounded shadow" data-nome="arco delicado" data-tipo="tiara">
+  <p>Arco/Tiara - R$15</p>
+  <button onclick="addCarrinho('Arco',15)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
 </div>
 
 </section>
 
-<h2>Carrinho</h2>
-<ul id="carrinho"></ul>
-<p>Total: <span id="total">0</span></p>
+<h2 class="p-4 font-bold">Carrinho</h2>
+<ul id="carrinho" class="px-4"></ul>
+<p class="px-4">Total: R$ <span id="total">0</span></p>
 
 <script>
 let total = 0;
@@ -50,11 +60,15 @@ let contador = 0;
 function addCarrinho(nome, preco){
   let lista = document.getElementById('carrinho');
   let item = document.createElement('li');
-  item.innerHTML = nome + ' - R$' + preco + ' <button onclick="this.remove()">X</button>';
+  item.innerHTML = nome + ' - R$' + preco + ' <button onclick="this.remove(); atualizar(-'+preco+', -1)">❌</button>';
   lista.appendChild(item);
 
-  total += preco;
-  contador++;
+  atualizar(preco, 1);
+}
+
+function atualizar(valor, qtd){
+  total += valor;
+  contador += qtd;
 
   document.getElementById('total').innerText = total;
   document.getElementById('contador').innerText = contador;
@@ -76,6 +90,10 @@ function filtrar(){
   });
 }
 </script>
+
+<footer class="bg-pink-400 text-white text-center p-4 mt-6">
+  <p>© 2026 - Laços da Lays</p>
+</footer>
 
 </body>
 </html>
