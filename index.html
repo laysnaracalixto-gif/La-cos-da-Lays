@@ -2,109 +2,80 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Laços da Lays</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-pink-50 font-sans">
 
-  <!-- Header -->
-  <header class="bg-pink-400 text-white p-5 flex justify-between items-center shadow">
-    <h1 class="text-2xl font-bold">Laços da Lays</h1>
-    <div class="relative">🛒 <span id="contador" class="absolute -top-2 -right-2 bg-white text-pink-500 text-xs px-2 rounded-full">0</span></div>
-  </header>
+<body class="bg-pink-50">
 
-  <!-- Busca + Filtro -->
-  <section class="p-4 bg-white shadow flex flex-col md:flex-row gap-3">
-    <input id="busca" onkeyup="filtrar()" type="text" placeholder="Buscar produto..." class="p-2 border rounded w-full">
-    <select id="filtro" onchange="filtrar()" class="p-2 border rounded">
-      <option value="todos">Todos</option>
-      <option value="laco">Laços</option>
-      <option value="tiara">Tiara</option>
-      <option value="presilha">Presilha</option>
-      <option value="xuxinha">Xuxinha</option>
-    </select>
-  </section>
+<header class="bg-pink-400 text-white p-4 flex justify-between">
+  <h1>Laços da Lays</h1>
+  <div>🛒 <span id="contador">0</span></div>
+</header>
 
-  <!-- Produtos -->
-  <section id="produtos" class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+<section class="p-4">
+  <input id="busca" onkeyup="filtrar()" placeholder="Buscar...">
+  
+  <select id="filtro" onchange="filtrar()">
+    <option value="todos">Todos</option>
+    <option value="laco">Laços</option>
+    <option value="tiara">Tiara</option>
+    <option value="presilha">Presilha</option>
+    <option value="xuxinha">Xuxinha</option>
+  </select>
+</section>
 
-    <div class="produto bg-white p-4 rounded shadow" data-nome="laço vermelho" data-tipo="laco">
-      <h2>Laço</h2>
-      <p>R$ 10</p>
-      <button onclick="addCarrinho('Laço',10)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
-    </div>
+<section id="produtos">
 
-    <div class="produto bg-white p-4 rounded shadow" data-nome="tiara floral" data-tipo="tiara">
-      <h2>Tiara</h2>
-      <p>R$ 20</p>
-      <button onclick="addCarrinho('Tiara',20)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
-    </div>
+<div class="produto" data-nome="laço rosa" data-tipo="laco">
+  <p>Laço - R$10</p>
+  <button onclick="addCarrinho('Laço',10)">Adicionar</button>
+</div>
 
-    <div class="produto bg-white p-4 rounded shadow" data-nome="presilha rosa" data-tipo="presilha">
-      <h2>Presilha</h2>
-      <p>R$ 12</p>
-      <button onclick="addCarrinho('Presilha',12)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
-    </div>
+<div class="produto" data-nome="xuxinha azul" data-tipo="xuxinha">
+  <p>Xuxinha - R$8</p>
+  <button onclick="addCarrinho('Xuxinha',8)">Adicionar</button>
+</div>
 
-    <div class="produto bg-white p-4 rounded shadow" data-nome="xuxinha colorida" data-tipo="xuxinha">
-      <h2>Xuxinha</h2>
-      <p>R$ 8</p>
-      <button onclick="addCarrinho('Xuxinha',8)" class="bg-pink-400 text-white px-3 py-1 rounded">Adicionar</button>
-    </div>
+</section>
 
-  </section>
+<h2>Carrinho</h2>
+<ul id="carrinho"></ul>
+<p>Total: <span id="total">0</span></p>
 
-  <!-- Carrinho -->
-  <section class="p-6 bg-white m-6 rounded-xl shadow">
-    <h2 class="text-xl font-bold">Carrinho</h2>
-    <ul id="carrinho"></ul>
-    <p>Total: R$ <span id="total">0</span></p>
-  </section>
+<script>
+let total = 0;
+let contador = 0;
 
-  <script>
-    let total = 0;
-    let contador = 0;
+function addCarrinho(nome, preco){
+  let lista = document.getElementById('carrinho');
+  let item = document.createElement('li');
+  item.innerHTML = nome + ' - R$' + preco + ' <button onclick="this.remove()">X</button>';
+  lista.appendChild(item);
 
-    function addCarrinho(nome, preco) {
-      const lista = document.getElementById('carrinho');
-      const item = document.createElement('li');
-      item.innerHTML = `${nome} - R$ ${preco} <button onclick="this.parentElement.remove(); atualizar(-${preco}, -1)">❌</button>`;
-      lista.appendChild(item);
-      atualizar(preco,1);
-    }
+  total += preco;
+  contador++;
 
-    function atualizar(valor,qtd){
-      total += valor;
-      contador += qtd;
-      document.getElementById('total').textContent = total;
-      document.getElementById('contador').textContent = contador;
-    }
+  document.getElementById('total').innerText = total;
+  document.getElementById('contador').innerText = contador;
+}
 
-    function filtrar(){
-      let busca = document.getElementById('busca').value.toLowerCase();
-      let filtro = document.getElementById('filtro').value;
-      let produtos = document.querySelectorAll('.produto');
+function filtrar(){
+  let busca = document.getElementById('busca').value.toLowerCase();
+  let filtro = document.getElementById('filtro').value;
+  let produtos = document.querySelectorAll('.produto');
 
-      produtos.forEach(p => {
-        let nome = p.dataset.nome;
-        let tipo = p.dataset.tipo;
+  produtos.forEach(p => {
+    let nome = p.dataset.nome;
+    let tipo = p.dataset.tipo;
 
-        let matchBusca = nome.includes(busca);
-        let matchFiltro = filtro === 'todos' || tipo === filtro;
+    let okBusca = nome.includes(busca);
+    let okFiltro = filtro == 'todos' || tipo == filtro;
 
-        if(matchBusca && matchFiltro){
-          p.style.display = 'block';
-        } else {
-          p.style.display = 'none';
-        }
-      });
-    }
-  </script>
-
-  <footer class="bg-pink-400 text-white text-center p-4">
-    <p>© 2026 - Laços da Lays</p>
-  </footer>
+    p.style.display = (okBusca && okFiltro) ? 'block' : 'none';
+  });
+}
+</script>
 
 </body>
 </html>
