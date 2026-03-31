@@ -1,127 +1,136 @@
-<ul id="carrinho" class="flex-grow overflow-y-auto mb-4 space-y-4 pr-2">
-  </ul>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laços da Lays - Loja Virtual</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Estilo para a barra de rolagem do carrinho */
+    #carrinho::-webkit-scrollbar { width: 4px; }
+    #carrinho::-webkit-scrollbar-thumb { background: #f472b6; border-radius: 10px; }
+    
+    /* Animação suave para os itens aparecendo */
+    .item-anim { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+
+<body class="bg-pink-50 font-sans min-h-screen">
+
+<header class="bg-pink-400 text-white p-5 flex justify-between items-center shadow-md sticky top-0 z-40">
+  <h1 class="text-2xl font-bold">🎀 Laços da Lays</h1>
+  <button class="text-lg bg-pink-500 p-2 rounded-xl hover:bg-pink-600 transition relative" onclick="toggleCarrinho()">
+    🛒 <span id="contador" class="bg-white text-pink-500 text-xs font-bold px-2 py-0.5 rounded-full absolute -top-2 -right-2 shadow">0</span>
+  </button>
+</header>
+
+<section class="p-4 flex flex-col md:flex-row gap-3 max-w-6xl mx-auto mt-2">
+  <input id="busca" onkeyup="filtrar()" placeholder="🔍 O que você procura?" class="p-3 border-none rounded-xl w-full shadow-sm focus:ring-2 focus:ring-pink-300 outline-none">
+  <select id="filtro" onchange="filtrar()" class="p-3 border-none rounded-xl shadow-sm focus:ring-2 focus:ring-pink-300 outline-none bg-white cursor-pointer">
+    <option value="todos">🌸 Todos os Modelos</option>
+    <option value="laco">Laços</option>
+    <option value="tiara">Arco/Tiara</option>
+    <option value="presilha">Presilha</option>
+    <option value="xuxinha">Xuxinha</option>
+  </select>
+</section>
+
+<section id="produtos" class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+  
+  <div class="produto bg-white p-5 rounded-3xl shadow-sm hover:shadow-md transition text-center border border-pink-100" data-nome="laço rosa" data-tipo="laco">
+    <div class="w-full h-32 bg-pink-50 rounded-2xl mb-3 flex items-center justify-center text-pink-200">Foto Aqui</div>
+    <h2 class="font-bold text-gray-700">Laço Rosa</h2>
+    <p class="text-pink-500 font-bold text-xl mb-4">R$ 12,00</p>
+    <button onclick="addCarrinho('Laço Rosa', 12)" class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full w-full transition">Adicionar</button>
+  </div>
+
+  <div class="produto bg-white p-5 rounded-3xl shadow-sm hover:shadow-md transition text-center border border-pink-100" data-nome="xuxinha azul" data-tipo="xuxinha">
+    <div class="w-full h-32 bg-pink-50 rounded-2xl mb-3 flex items-center justify-center text-pink-200">Foto Aqui</div>
+    <h2 class="font-bold text-gray-700">Xuxinha Azul</h2>
+    <p class="text-pink-500 font-bold text-xl mb-4">R$ 8,00</p>
+    <button onclick="addCarrinho('Xuxinha Azul', 8)" class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full w-full transition">Adicionar</button>
+  </div>
+
+  <div class="produto bg-white p-5 rounded-3xl shadow-sm hover:shadow-md transition text-center border border-pink-100" data-nome="tiara brilho" data-tipo="tiara">
+    <div class="w-full h-32 bg-pink-50 rounded-2xl mb-3 flex items-center justify-center text-pink-200">Foto Aqui</div>
+    <h2 class="font-bold text-gray-700">Tiara de Brilho</h2>
+    <p class="text-pink-500 font-bold text-xl mb-4">R$ 15,00</p>
+    <button onclick="addCarrinho('Tiara Brilho', 15)" class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full w-full transition">Adicionar</button>
+  </div>
+
+</section>
+
+<div id="overlay" onclick="toggleCarrinho()" class="fixed inset-0 bg-black bg-opacity-40 hidden z-40 backdrop-blur-sm"></div>
+
+<div id="carrinhoBox" class="fixed top-0 right-[-100%] md:right-[-400px] w-full md:w-80 h-full bg-white shadow-2xl p-6 transition-all duration-500 ease-in-out z-50 flex flex-col">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Seu Pedido 🛍️</h2>
+    <button onclick="toggleCarrinho()" class="text-gray-400 hover:text-gray-600 text-3xl">&times;</button>
+  </div>
+  
+  <ul id="carrinho" class="flex-grow overflow-y-auto mb-4 space-y-4 pr-2">
+    </ul>
+
+  <div class="border-t pt-4 bg-white">
+    <div class="flex justify-between text-xl font-bold mb-4 px-1">
+      <span>Total:</span>
+      <span class="text-pink-600">R$ <span id="total">0,00</span></span>
+    </div>
+
+    <input id="endereco" type="text" placeholder="🏠 Seu endereço para entrega" class="p-3 border rounded-xl w-full mb-3 focus:ring-2 focus:ring-pink-300 outline-none bg-pink-50/50">
+
+    <select id="pagamento" class="p-3 border rounded-xl w-full mb-4 focus:ring-2 focus:ring-pink-300 outline-none bg-gray-50 cursor-pointer">
+      <option value="Pix">💳 Pix</option>
+      <option value="Dinheiro">💵 Dinheiro na Entrega</option>
+    </select>
+
+    <button onclick="finalizarCompra()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-2xl w-full shadow-lg transition active:scale-95">
+      Pedir no WhatsApp 📱
+    </button>
+  </div>
+</div>
 
 <script>
-// 1. Inicialização (Lê do navegador ou começa vazio)
+// Lógica do Carrinho
 let carrinho = JSON.parse(localStorage.getItem('carrinho_lays')) || [];
 let aberto = false;
-
-// 2. FUNÇÃO: Adicionar ou Incrementar Quantidade
-function addCarrinho(nome, preco) {
-  // Procura se o item já está no carrinho
-  const itemExistente = carrinho.find(item => item.nome === nome);
-
-  if (itemExistente) {
-    // Se já existe, só aumenta a quantidade
-    itemExistente.qtd += 1;
-  } else {
-    // Se é novo, adiciona com quantidade 1
-    carrinho.push({ nome, preco, qtd: 1 });
-  }
-
-  salvarESincronizar();
-  if(!aberto) toggleCarrinho(); // Abre o carrinho para mostrar que funcionou
-}
-
-// 3. FUNÇÃO: Alterar quantidade (Botões + e -)
-function alterarQtd(index, delta) {
-  carrinho[index].qtd += delta;
-
-  // Se a quantidade chegar a 0, removemos o item do carrinho
-  if (carrinho[index].qtd <= 0) {
-    carrinho.splice(index, 1);
-  }
-
-  salvarESincronizar();
-}
-
-// 4. FUNÇÃO: Atualizar Visual do Carrinho
-function atualizarLista() {
-  const lista = document.getElementById('carrinho');
-  const totalElem = document.getElementById('total');
-  const contadorElem = document.getElementById('contador');
-  
-  lista.innerHTML = '';
-  let somaTotal = 0;
-  let totalItens = 0;
-
-  carrinho.forEach((item, index) => {
-    const subtotal = item.preco * item.qtd;
-    somaTotal += subtotal;
-    totalItens += item.qtd;
-
-    let li = document.createElement('li');
-    li.className = "bg-pink-50 p-3 rounded-2xl shadow-sm border border-pink-100";
-    li.innerHTML = `
-      <div class="flex justify-between items-start mb-2">
-        <div>
-          <p class="font-bold text-gray-800">${item.nome}</p>
-          <p class="text-xs text-pink-400">Unitário: R$ ${item.preco.toFixed(2)}</p>
-        </div>
-        <p class="font-bold text-pink-600">R$ ${subtotal.toFixed(2)}</p>
-      </div>
-      
-      <div class="flex justify-between items-center">
-        <div class="flex items-center bg-white rounded-lg border border-pink-200">
-          <button onclick="alterarQtd(${index}, -1)" class="px-3 py-1 text-pink-500 font-bold hover:bg-pink-50 rounded-l-lg">-</button>
-          <span class="px-3 py-1 font-semibold text-gray-700 border-x border-pink-100">${item.qtd}</span>
-          <button onclick="alterarQtd(${index}, 1)" class="px-3 py-1 text-pink-500 font-bold hover:bg-pink-50 rounded-r-lg">+</button>
-        </div>
-        
-        <button onclick="removerTotal(${index})" class="text-xs text-gray-400 hover:text-red-500 underline">Remover tudo</button>
-      </div>
-    `;
-    lista.appendChild(li);
-  });
-
-  totalElem.innerText = somaTotal.toFixed(2);
-  contadorElem.innerText = totalItens;
-
-  if(carrinho.length === 0) {
-    lista.innerHTML = '<div class="text-center mt-10 text-gray-400">🛒 Carrinho vazio...<br>Que tal um laço novo?</div>';
-  }
-}
-
-// 5. FUNÇÃO: Remover o item completamente (Independente da quantidade)
-function removerTotal(index) {
-  carrinho.splice(index, 1);
-  salvarESincronizar();
-}
-
-// 6. FUNÇÃO: Finalizar Pedido com Quantidades
-function finalizarCompra() {
-  if (carrinho.length === 0) return alert("Adicione itens para finalizar!");
-  
-  let endereco = document.getElementById('endereco').value;
-  let pagamento = document.getElementById('pagamento').value;
-  
-  let texto = `*🛍️ Novo Pedido - Laços da Lays*%0A%0A`;
-  
-  carrinho.forEach(i => {
-    texto += `• *${i.qtd}x* ${i.nome} (_R$${(i.preco * i.qtd).toFixed(2)}_)%0A`;
-  });
-  
-  texto += `%0A💰 *Total:* R$ ${document.getElementById('total').innerText}`;
-  texto += `%0A💳 *Pagamento:* ${pagamento}`;
-  texto += `%0A🏠 *Endereço:* ${endereco || 'Retirada'}`;
-
-  window.open(`https://wa.me/5527998346411?text=${texto}`);
-}
-
-// Auxiliares
-function salvarESincronizar() {
-  localStorage.setItem('carrinho_lays', JSON.stringify(carrinho));
-  atualizarLista();
-}
 
 function toggleCarrinho() {
   const box = document.getElementById('carrinhoBox');
   const overlay = document.getElementById('overlay');
   aberto = !aberto;
-  box.style.right = aberto ? '0' : (window.innerWidth < 768 ? '-100%' : '-400px');
-  overlay.classList.toggle('hidden');
+
+  if (aberto) {
+    box.style.right = '0';
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  } else {
+    box.style.right = window.innerWidth < 768 ? '-100%' : '-400px';
+    overlay.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+  }
 }
 
-// Inicializa ao abrir a página
-atualizarLista();
-</script>
+function addCarrinho(nome, preco) {
+  const index = carrinho.findIndex(item => item.nome === nome);
+  if (index >= 0) {
+    carrinho[index].qtd += 1;
+  } else {
+    carrinho.push({ nome, preco, qtd: 1 });
+  }
+  salvarESincronizar();
+  if(!aberto) toggleCarrinho();
+}
+
+function alterarQtd(index, delta) {
+  carrinho[index].qtd += delta;
+  if (carrinho[index].qtd <= 0) {
+    carrinho.splice(index, 1);
+  }
+  salvarESincronizar();
+}
+
+function salvarESincronizar() {
+  localStorage.setItem('carrinho_lays', JSON.stringify(carrinho));
+  atual
