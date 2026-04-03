@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Laços da Lays</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -23,8 +24,8 @@
   </script>
   <style>
     body {
-      background-color: #f9a5d3;
-      /* Fundo rosa bebê (equivalente ao pink-50 do tailwind) */
+      background-color: #fe9dc6;
+      /* Fundo do site personalizável */
       min-height: 100vh;
       margin: 0;
       padding: 0;
@@ -61,58 +62,224 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
+
+    /* Título com Gradiente e Fonte Especial */
+    .lacos-title {
+      font-family: 'Pinyon Script', cursive;
+      background: linear-gradient(135deg, #9d174d 0%, #db2777 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 8px rgba(157, 23, 77, 0.2);
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+
+    /* Efeito de Luz e Movimento nos Cards */
+    .produto-glass {
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .produto-glass:hover {
+      transform: translateY(-8px) scale(1.01);
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 20px 40px rgba(255, 255, 255, 0.4), 0 10px 20px rgba(236, 72, 153, 0.1);
+      border-color: rgba(255, 255, 255, 0.9);
+      filter: brightness(1.05);
+    }
+
+    /* Partículas Mágicas (Varinha Disney) */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 10px white, 0 0 20px #f472b6;
+      animation: magicFall 0.8s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes magicFall {
+      0% { transform: scale(1) translateY(0); opacity: 1; }
+      100% { transform: scale(0) translateY(20px); opacity: 0; }
+    }
+
+    /* Animação Vibrante do Carrinho */
+    @keyframes cartPop {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.4) rotate(-15deg); }
+      50% { transform: scale(1.4) rotate(15deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    .animate-cart-pop {
+      animation: cartPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Toast Notification (Aviso Rápido) */
+    .toast {
+      position: fixed;
+      top: 90px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(236, 72, 153, 0.3);
+      padding: 12px 20px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      z-index: 100;
+      animation: toastBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes toastBounce {
+      0% { transform: translateX(120%) scale(0.8); opacity: 0; }
+      100% { transform: translateX(0) scale(1); opacity: 1; }
+    }
+    .toast-out {
+      animation: toastFadeOut 0.4s ease-in forwards !important;
+    }
+    @keyframes toastFadeOut {
+      0% { transform: translateX(0) scale(1); opacity: 1; }
+      100% { transform: translateX(120%) scale(0.8); opacity: 0; }
+    }
+
+    /* Estilo de Erro nos Campos */
+    .field-error {
+      border-color: #ef4444 !important;
+      background-color: rgba(254, 242, 242, 0.6) !important;
+      animation: shake 0.3s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Animação de Rolagem Infinita */
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-300px * 3 - 1.5rem * 3)); }
+    }
+    .scroll-container {
+      display: flex;
+      width: max-content;
+      animation: scroll 30s linear infinite;
+    }
+    .scroll-container:hover {
+      animation-play-state: paused;
+    }
+
+    /* Reações ao Vivo Estilo Insta/TikTok */
+    .live-reaction {
+      position: absolute;
+      bottom: 0;
+      font-size: 24px;
+      pointer-events: none;
+      z-index: 20;
+      animation: floatUp 3s ease-out forwards;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.5); opacity: 0; }
+      20% { opacity: 1; transform: translateY(-20px) scale(1.2); }
+      100% { transform: translateY(-200px) translateX(var(--drift)) scale(1); opacity: 0; }
+    }
   </style>
 </head>
 
-<body class="bg-pink-50 text-neutral-800 antialiased selection:bg-pink-200">
+<body class="bg-[#fe9dc6] text-neutral-800 antialiased selection:bg-pink-200">
 
   <!-- === CABEÇALHO === -->
   <header
-    class="blur-bg text-gray-800 px-6 py-3 flex justify-between items-center border-b border-pink-200/50 sticky top-0 z-40">
+    class="bg-white/80 backdrop-blur-xl text-gray-800 px-6 py-4 flex justify-between items-center border-b border-pink-100 sticky top-0 z-40 shadow-sm">
     <div class="flex items-center gap-3">
       <!-- O nome do arquivo da logo deve ser 'logo.png' (ou o nome que você salvar a imagem) -->
       <img src="Logo.png.png" alt="Logo Laços da Lays"
         class="h-12 w-12 rounded-full shadow-sm object-cover border-2 border-white">
-      <h1 class="text-xl font-bold tracking-tight text-neutral-900 hidden sm:block">Laços da Lays</h1>
+      <h1 class="text-3xl font-normal tracking-wide hidden sm:block lacos-title">Laços da Lays</h1>
     </div>
-    <button onclick="toggleCarrinho()"
-      class="p-2 relative hover:bg-white/50 rounded-full transition-colors active:scale-95 group focus:outline-none">
-      <span class="text-2xl">🛒</span>
-      <span id="contador"
-        class="bg-pink-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full absolute top-1 right-0 border-2 border-white transform scale-100 group-active:scale-110 transition-transform">0</span>
-    </button>
+    <div class="flex items-center gap-4">
+      <a href="https://www.instagram.com/lacosda_lays/" id="instagramLink" target="_blank"
+        class="p-2 bg-white/60 border border-pink-100 shadow-sm rounded-full transition-all active:scale-95 hover:bg-gradient-to-tr hover:from-[#f9ce34] hover:via-[#ee2a7b] hover:to-[#6228d7] hover:text-white text-pink-600 focus:outline-none flex items-center justify-center w-10 h-10">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+      </a>
+
+      <button onclick="toggleCarrinho()"
+        class="p-2 relative bg-white/60 border border-pink-200 shadow-sm rounded-full transition-colors active:scale-95 group focus:outline-none hover:bg-white/90 w-10 h-10 flex items-center justify-center">
+        <span class="text-xl">🛒</span>
+        <span id="contador"
+          class="bg-pink-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full absolute -top-1 -right-1 border-2 border-white transform scale-100 group-active:scale-110 transition-transform">0</span>
+      </button>
+    </div>
   </header>
 
   <!-- === BARRA DE BUSCA E FILTROS === -->
   <section class="p-4 flex flex-col sm:flex-row gap-3 max-w-6xl mx-auto mt-4 px-6 relative z-10">
-    <div class="relative w-full">
-      <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
-      <input id="busca" onkeyup="filtrar()" placeholder="Buscar..."
-        class="w-full bg-gray-100/80 text-gray-900 border-none rounded-2xl py-3 pl-11 pr-4 shadow-sm outline-none focus:bg-white focus:ring-2 focus:ring-pink-300 transition-all text-[15px] placeholder-gray-400">
+    <div class="relative w-full group">
+      <span class="absolute left-5 top-1/2 transform -translate-y-1/2 text-pink-500 group-focus-within:scale-110 transition-transform">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </span>
+      <input id="busca" onkeyup="filtrar()" placeholder="Buscar nos mimos..."
+        class="w-full bg-white/60 backdrop-blur-md border border-white/80 text-gray-900 rounded-[24px] py-4 pl-14 pr-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] outline-none focus:bg-white/80 focus:ring-2 focus:ring-pink-300 transition-all text-[15px] placeholder-gray-500 font-medium">
     </div>
 
     <div class="flex gap-3 w-full sm:w-auto">
-      <select id="filtro" onchange="filtrar()"
-        class="bg-gray-100/80 text-gray-800 rounded-2xl py-3 px-4 shadow-sm border-none focus:bg-white focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] appearance-none flex-1 font-medium">
-        <option value="todos">Todos</option>
-        <option value="laco">🌺 Laços</option>
-        <option value="tiara">👑 Tiaras</option>
-        <option value="arco">🌈 Arcos</option>
-        <option value="presilha">🦋 Presilhas</option>
-        <option value="xuxinha">🧶 Xuxinhas</option>
-      </select>
+      <!-- Dropdown Customizado -->
+      <div class="relative flex-1 min-w-[140px]" id="dropdownContainer">
+        <button onclick="toggleDropdown()" id="dropdownBtn"
+          class="w-full bg-white/60 backdrop-blur-md border border-white/80 text-gray-800 rounded-[24px] py-4 px-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] focus:bg-white/80 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] font-bold cursor-pointer flex justify-between items-center gap-2 group">
+          <span id="selectedOption">☰ Todos</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-pink-400 group-hover:text-pink-600 transition-colors"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        
+        <div id="dropdownMenu" class="absolute top-[calc(100%+8px)] left-0 w-full bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[24px] shadow-ios-lg opacity-0 translate-y-2 pointer-events-none transition-all duration-300 z-0 overflow-hidden">
+          <div class="py-2">
+            <button onclick="selectOption('todos', '☰ Todos')" class="w-full text-left px-5 py-3 text-[15px] font-semibold text-gray-800 hover:bg-pink-500/80 hover:text-white transition-colors flex items-center gap-3">☰ Todos</button>
+            <button onclick="selectOption('laco', '🌺 Laços')" class="w-full text-left px-5 py-3 text-[15px] font-semibold text-gray-800 hover:bg-pink-500/80 hover:text-white transition-colors flex items-center gap-3">🌺 Laços</button>
+            <button onclick="selectOption('tiara', '👑 Tiaras')" class="w-full text-left px-5 py-3 text-[15px] font-semibold text-gray-800 hover:bg-pink-500/80 hover:text-white transition-colors flex items-center gap-3">👑 Tiaras</button>
+            <button onclick="selectOption('arco', '🌈 Arcos')" class="w-full text-left px-5 py-3 text-[15px] font-semibold text-gray-800 hover:bg-pink-500/80 hover:text-white transition-colors flex items-center gap-3">🌈 Arcos</button>
+            <button onclick="selectOption('presilha', '🦋 Presilhas')" class="w-full text-left px-5 py-3 text-[15px] font-semibold text-gray-800 hover:bg-pink-500/80 hover:text-white transition-colors flex items-center gap-3">🦋 Presilhas</button>
+            <button onclick="selectOption('xuxinha', '🧶 Xuxinhas')" class="w-full text-left px-5 py-3 text-[15px] font-semibold text-gray-800 hover:bg-pink-500/80 hover:text-white transition-colors flex items-center gap-3">🧶 Xuxinhas</button>
+          </div>
+        </div>
+      </div>
+      <!-- Entrada oculta para manter a compatibilidade com o script de filtro atual -->
+      <input type="hidden" id="filtro" value="todos">
 
       <button id="btnFavoritos" onclick="toggleAbaFavoritos()"
-        class="bg-gray-100/80 text-gray-800 py-3 px-5 rounded-2xl shadow-sm border-none font-semibold hover:bg-gray-200 transition active:scale-95 flex justify-center items-center gap-2 whitespace-nowrap text-[15px]">
-        🤍 Favoritos
+        class="bg-white/60 backdrop-blur-md border border-white/80 text-gray-800 py-4 px-6 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] font-bold hover:bg-white/80 transition active:scale-95 flex justify-center items-center gap-2 whitespace-nowrap text-[15px]">
+        <span class="text-[22px] leading-none mt-[-2px] font-normal text-pink-500">♡</span> Favoritos
       </button>
     </div>
   </section>
 
-  <!-- Título de Favoritos -->
-  <div class="max-w-6xl mx-auto px-6 mt-2 hidden transition-all" id="tituloFavoritos">
-    <h2 class="text-2xl font-bold text-neutral-900 tracking-tight">Favoritos</h2>
-    <p class="text-gray-500 text-sm mt-1">Tudo que você mais amou.</p>
+  <!-- === MODAL DE AVISO (ERROR POPUP) === -->
+  <div id="errorModal" class="fixed inset-0 bg-neutral-900/40 hidden z-[70] backdrop-blur-sm flex justify-center items-center px-4 opacity-0 transition-opacity duration-300">
+    <div class="bg-white/90 backdrop-blur-2xl w-full max-w-sm rounded-[32px] shadow-ios-lg overflow-hidden border border-red-100 p-8 text-center animate-in zoom-in duration-300">
+      <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="text-3xl">⚠️</span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Ops! Falta algo...</h3>
+      <p id="errorMsg" class="text-gray-600 text-sm mb-6 leading-relaxed"></p>
+      <button onclick="closeErrorModal()" class="bg-neutral-800 text-white font-bold py-3 px-8 rounded-2xl hover:bg-black transition-colors w-full">Entendido</button>
+    </div>
+  </div>
+
+  <!-- === MODAL DE FAVORITOS (POPUP) === -->
+  <div id="favoritosModal" class="fixed inset-0 bg-neutral-900/40 hidden z-[55] backdrop-blur-sm transition-opacity opacity-0 duration-300 flex justify-center items-center px-4">
+    <div class="bg-white/80 backdrop-blur-2xl w-full max-w-md rounded-[32px] shadow-ios-lg overflow-hidden border border-white/60 flex flex-col max-h-[80vh]">
+      <div class="p-6 flex justify-between items-center border-b border-white/40">
+        <h2 class="text-2xl font-bold text-neutral-900 tracking-tight">Meus Favoritos ♡</h2>
+        <button onclick="toggleAbaFavoritos()" class="w-10 h-10 flex items-center justify-center bg-white/60 rounded-full text-gray-500 hover:bg-white hover:text-gray-800 transition-colors active:scale-95">
+          <span class="text-2xl leading-none">&times;</span>
+        </button>
+      </div>
+      <div id="listaFavoritos" class="flex-grow overflow-y-auto p-6 space-y-4">
+        <!-- Itens favoritados aparecem aqui -->
+      </div>
+      <div class="p-6 bg-white/40 border-t border-white/40 text-center">
+        <p class="text-sm text-gray-500 font-medium">Salve seus mimos favoritos aqui!</p>
+      </div>
+    </div>
   </div>
 
   <!-- ============================================== -->
@@ -124,33 +291,56 @@
     <!-- Dinamicamente gerado -->
   </section>
 
-  <!-- === CARROSSEL DE DEPOIMENTOS === -->
-  <section class="max-w-6xl mx-auto p-6 my-8">
-    <h2 class="text-[22px] font-bold text-neutral-900 tracking-tight mb-6">O que dizem nossas clientes</h2>
-    <div class="flex overflow-x-auto gap-4 pb-6 snap-x snap-mandatory hide-scrollbar">
-      <div
-        class="min-w-[280px] snap-center bg-white p-5 rounded-[24px] shadow-ios border border-gray-100/50 flex-shrink-0">
-        <div class="flex text-yellow-400 text-base mb-3 gap-1">★★★★★</div>
-        <p class="text-gray-600 mb-4 leading-relaxed text-[15px]">"Os laços são perfeitos! Minha filha adorou os
-          detalhes."</p>
-        <p class="font-semibold text-neutral-900 text-sm">Maria S.</p>
-      </div>
-      <div
-        class="min-w-[280px] snap-center bg-white p-5 rounded-[24px] shadow-ios border border-gray-100/50 flex-shrink-0">
-        <div class="flex text-yellow-400 text-base mb-3 gap-1">★★★★★</div>
-        <p class="text-gray-600 mb-4 leading-relaxed text-[15px]">"Qualidade impecável da Tiara Brilho, chegou rápido e
-          bem embalado."</p>
-        <p class="font-semibold text-neutral-900 text-sm">Juliana F.</p>
-      </div>
-      <div
-        class="min-w-[280px] snap-center bg-white p-5 rounded-[24px] shadow-ios border border-gray-100/50 flex-shrink-0">
-        <div class="flex text-yellow-400 text-base mb-3 gap-1">★★★★★</div>
-        <p class="text-gray-600 mb-4 leading-relaxed text-[15px]">"Amei as xuxinhas de seda, não quebram o cabelo. Com
-          certeza vou comprar mais."</p>
-        <p class="font-semibold text-neutral-900 text-sm">Ana Paula</p>
+  <!-- === COMPONENTES DE DEPOIMENTOS COM ROLAGEM INFINITA E REAÇÕES === -->
+  <section class="max-w-6xl mx-auto p-6 my-12 relative overflow-hidden">
+    <h2 class="text-[22px] font-bold text-neutral-900 tracking-tight mb-8 text-center sm:text-left">O que dizem nossas clientes</h2>
+    
+    <!-- Container que Spawna Reações -->
+    <div id="reactionArea" class="absolute inset-0 pointer-events-none"></div>
+
+    <div class="relative w-full overflow-hidden mask-fade-edges">
+      <div class="scroll-container gap-6">
+        <!-- Depoimentos originais -->
+        <div class="min-w-[300px] bg-white/40 backdrop-blur-xl p-6 rounded-[32px] shadow-ios border border-white/60 flex-shrink-0">
+          <div class="flex text-yellow-500 text-base mb-3 gap-1">★★★★★</div>
+          <p class="text-gray-700 mb-4 leading-relaxed text-[15px]">"Os laços são perfeitos! Minha filha adorou os detalhes."</p>
+          <p class="font-bold text-neutral-900 text-sm">Maria S.</p>
+        </div>
+        <div class="min-w-[300px] bg-white/40 backdrop-blur-xl p-6 rounded-[32px] shadow-ios border border-white/60 flex-shrink-0">
+          <div class="flex text-yellow-500 text-base mb-3 gap-1">★★★★★</div>
+          <p class="text-gray-700 mb-4 leading-relaxed text-[15px]">"Qualidade impecável da Tiara Brilho, chegou rápido e bem embalado."</p>
+          <p class="font-bold text-neutral-900 text-sm">Juliana F.</p>
+        </div>
+        <div class="min-w-[300px] bg-white/40 backdrop-blur-xl p-6 rounded-[32px] shadow-ios border border-white/60 flex-shrink-0">
+          <div class="flex text-yellow-500 text-base mb-3 gap-1">★★★★★</div>
+          <p class="text-gray-700 mb-4 leading-relaxed text-[15px]">"Amei as xuxinhas de seda, não quebram o cabelo. Com certeza vou comprar mais."</p>
+          <p class="font-bold text-neutral-900 text-sm">Ana Paula</p>
+        </div>
+        <!-- Duplicados para o loop infinito sem pulos -->
+        <div class="min-w-[300px] bg-white/40 backdrop-blur-xl p-6 rounded-[32px] shadow-ios border border-white/60 flex-shrink-0">
+          <div class="flex text-yellow-500 text-base mb-3 gap-1">★★★★★</div>
+          <p class="text-gray-700 mb-4 leading-relaxed text-[15px]">"Os laços são perfeitos! Minha filha adorou os detalhes."</p>
+          <p class="font-bold text-neutral-900 text-sm">Maria S.</p>
+        </div>
+        <div class="min-w-[300px] bg-white/40 backdrop-blur-xl p-6 rounded-[32px] shadow-ios border border-white/60 flex-shrink-0">
+          <div class="flex text-yellow-500 text-base mb-3 gap-1">★★★★★</div>
+          <p class="text-gray-700 mb-4 leading-relaxed text-[15px]">"Qualidade impecável da Tiara Brilho, chegou rápido e bem embalado."</p>
+          <p class="font-bold text-neutral-900 text-sm">Juliana F.</p>
+        </div>
+        <div class="min-w-[300px] bg-white/40 backdrop-blur-xl p-6 rounded-[32px] shadow-ios border border-white/60 flex-shrink-0">
+          <div class="flex text-yellow-500 text-base mb-3 gap-1">★★★★★</div>
+          <p class="text-gray-700 mb-4 leading-relaxed text-[15px]">"Amei as xuxinhas de seda, não quebram o cabelo. Com certeza vou comprar mais."</p>
+          <p class="font-bold text-neutral-900 text-sm">Ana Paula</p>
+        </div>
       </div>
     </div>
   </section>
+
+  <style>
+    .mask-fade-edges {
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    }
+  </style>
 
   <!-- === COMPONENTES DO CARRINHO LATERAL === -->
   <div id="overlay" onclick="toggleCarrinho()"
@@ -158,7 +348,7 @@
   </div>
 
   <div id="carrinhoBox"
-    class="fixed top-0 right-[-100%] md:right-[-420px] w-[90%] md:w-[400px] h-full bg-white shadow-ios-lg z-50 flex flex-col rounded-l-[32px] overflow-hidden">
+    class="fixed top-0 right-[-100%] md:right-[-420px] w-[90%] md:w-[400px] h-full bg-white/70 backdrop-blur-2xl shadow-ios-lg z-50 flex flex-col rounded-l-[32px] overflow-hidden border-l border-white/60">
 
     <div class="pt-8 pb-4 px-6 flex justify-between items-center border-b border-gray-100">
       <h2 class="text-[22px] font-bold text-neutral-900 tracking-tight">Carrinho</h2>
@@ -168,24 +358,84 @@
       </button>
     </div>
 
-    <ul id="carrinho" class="flex-grow overflow-y-auto px-6 py-4 space-y-4"></ul>
+    <!-- ETAPA 1: LISTA DE ITENS -->
+    <div id="carrinhoEtapa1" class="flex flex-col flex-grow overflow-hidden">
+      <ul id="carrinho" class="flex-grow overflow-y-auto px-6 py-4 space-y-4"></ul>
 
-    <div class="border-t border-gray-100 p-6 bg-gray-50/50">
-      <div class="flex justify-between font-bold text-lg mb-5 text-neutral-900">
-        <span>Total</span>
-        <span>R$ <span id="total">0,00</span></span>
+      <div class="border-t border-white/50 p-6 bg-white/30 backdrop-blur-md">
+        <div class="flex justify-between font-bold text-lg mb-5 text-neutral-900">
+          <span>Total</span>
+          <span>R$ <span id="total">0,00</span></span>
+        </div>
+        <button onclick="irParaCheckout()" 
+          class="bg-pink-500 hover:bg-pink-600 active:bg-pink-700 active:scale-[0.98] transition-all text-white font-bold py-4 rounded-[20px] w-full flex justify-center items-center gap-2 shadow-sm text-[16px]">
+          Continuar Pedido ➔
+        </button>
       </div>
-      <input id="telefone" type="tel" oninput="formatarTelefone(this)" placeholder="WhatsApp (DDD + Número)"
-        maxlength="15"
-        class="bg-white px-4 py-3.5 border-none shadow-sm rounded-2xl w-full mb-3 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] placeholder-gray-400">
-      <input id="endereco" type="text" placeholder="Endereço de entrega"
-        class="bg-white px-4 py-3.5 border-none shadow-sm rounded-2xl w-full mb-5 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] placeholder-gray-400">
-      <button onclick="finalizarCompra()"
-        class="bg-pink-500 hover:bg-pink-600 active:bg-pink-700 active:scale-[0.98] transition-all text-white font-semibold py-4 rounded-[20px] w-full flex justify-center items-center gap-2 shadow-sm text-[16px]">
+    </div>
+
+    <!-- ETAPA 2: DADOS DE ENTREGA -->
+    <div id="carrinhoEtapa2" class="hidden flex flex-col flex-grow overflow-y-auto p-6">
+      <button onclick="voltarParaItens()" class="text-pink-500 font-bold text-sm mb-6 flex items-center gap-1 hover:underline">
+        ← Voltar para a lista
+      </button>
+
+      <h3 class="text-lg font-bold text-gray-800 mb-4">📍 Onde entregamos?</h3>
+
+      <div class="space-y-3 mb-6">
+        <input id="nome_cliente" type="text" placeholder="Seu Nome"
+          class="bg-white/60 px-4 py-3.5 border border-white/60 shadow-sm rounded-2xl w-full focus:bg-white/80 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] placeholder-gray-500">
+        
+        <div class="flex flex-col gap-3">
+          <div class="flex gap-2">
+            <input id="cep" type="text" maxlength="9" 
+              onblur="buscarCEP(this.value)" 
+              onkeydown="if(event.key==='Enter') { event.preventDefault(); buscarCEP(this.value); }" 
+              oninput="formatarCEP(this)" 
+              placeholder="CEP"
+              class="bg-white/60 px-4 py-3.5 border border-white/60 shadow-sm rounded-2xl w-32 focus:bg-white/80 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] placeholder-gray-500">
+            
+            <select id="cidade_uf" onchange="aoMudarCidade()"
+              class="bg-white/60 backdrop-blur-md px-4 py-3.5 border border-white/60 shadow-sm rounded-2xl flex-1 outline-none text-[14px] focus:bg-white/80 focus:ring-2 focus:ring-pink-300 transition-all font-medium text-gray-700 cursor-pointer appearance-none">
+              <option value="">Selecione a Cidade</option>
+              <option value="Vila Velha / ES">Vila Velha / ES</option>
+              <option value="Vitória / ES">Vitória / ES</option>
+              <option value="Serra / ES">Serra / ES</option>
+              <option value="Cariacica / ES">Cariacica / ES</option>
+              <option value="Guarapari / ES">Guarapari / ES</option>
+              <option value="Viana / ES">Viana / ES</option>
+              <option value="Linhares / ES">Linhares / ES</option>
+              <option value="Colatina / ES">Colatina / ES</option>
+              <option value="São Mateus / ES">São Mateus / ES</option>
+              <option value="Cachoeiro de Itapemirim / ES">Cachoeiro de Itapemirim / ES</option>
+              <option value="Aracruz / ES">Aracruz / ES</option>
+            </select>
+          </div>
+          <input id="rua_bairro" type="text" placeholder="Rua e Bairro"
+            class="bg-white/60 px-4 py-3.5 border border-white/60 shadow-sm rounded-2xl w-full focus:bg-white/80 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] placeholder-gray-500">
+        </div>
+
+        <div class="flex gap-2">
+          <input id="numero" type="text" placeholder="Nº"
+            class="bg-white/60 px-4 py-3.5 border border-white/60 shadow-sm rounded-2xl w-20 focus:bg-white/80 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] placeholder-gray-500">
+          <input id="complemento" type="text" placeholder="Complemento (Opcional)"
+            class="bg-white/60 px-4 py-3.5 border border-white/60 shadow-sm rounded-2xl flex-1 focus:bg-white/80 focus:ring-2 focus:ring-pink-300 outline-none transition-all text-[15px] placeholder-gray-500">
+        </div>
+      </div>
+
+      <button id="btnFinalizar" onclick="finalizarCompra()"
+        class="bg-pink-300 transition-all text-white font-bold py-4 rounded-[20px] w-full flex justify-center items-center gap-2 shadow-sm text-lg mt-auto focus:outline-none">
         Finalizar no WhatsApp 💬
       </button>
     </div>
   </div>
+  </div>
+
+  <!-- === BOTÃO FLUTUANTE (FAB) === -->
+  <button id="fabBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); setTimeout(()=>document.getElementById('busca').focus(), 500);" 
+    class="fixed bottom-6 right-6 w-14 h-14 bg-white/60 backdrop-blur-xl border border-white/80 shadow-ios-lg rounded-full flex items-center justify-center text-2xl z-50 transition-all duration-300 opacity-0 translate-y-6 pointer-events-none hover:bg-white/80 hover:scale-105 active:scale-95 group">
+    🔍
+  </button>
 
   <!-- === MODAL DE IMAGEM === -->
   <div id="imageModal" class="fixed inset-0 bg-black/80 hidden z-[60] flex justify-center items-center opacity-0 transition-opacity duration-300 backdrop-blur-sm px-4">
@@ -207,9 +457,9 @@
       aberto = !aberto;
 
       if (aberto) {
+        voltarParaItens(); // Reseta para a etapa 1 ao abrir
         box.style.right = '0';
         overlay.classList.remove('hidden');
-        // Delay pequeno para transição de opacidade funcionar
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
           overlay.classList.add('opacity-100');
@@ -224,7 +474,20 @@
       }
     }
 
-    function addCarrinho(nome, preco) {
+    // --- Navegação Checkout ---
+    function irParaCheckout() {
+      if (carrinho.length === 0) return alert("Adicione itens para prosseguir!");
+      document.getElementById('carrinhoEtapa1').classList.add('hidden');
+      document.getElementById('carrinhoEtapa2').classList.remove('hidden');
+      validarCampos();
+    }
+
+    function voltarParaItens() {
+      document.getElementById('carrinhoEtapa2').classList.add('hidden');
+      document.getElementById('carrinhoEtapa1').classList.remove('hidden');
+    }
+
+    function addCarrinho(nome, preco, btn) {
       const index = carrinho.findIndex(item => item.nome === nome);
       if (index >= 0) {
         carrinho[index].qtd += 1;
@@ -233,12 +496,41 @@
       }
 
       salvarCarrinho();
+      
+      // --- Notificação Toast (Aviso Rápido) ---
+      mostrarToast(nome);
+      
+      // --- Animação de Destaque no Carrinho ---
+      const btnCart = document.querySelector('header button[onclick="toggleCarrinho()"]');
+      if (btnCart) {
+        btnCart.classList.remove('animate-cart-pop');
+        void btnCart.offsetWidth; 
+        btnCart.classList.add('animate-cart-pop');
+      }
+    }
 
-      const btnCart = document.querySelector('header button');
-      btnCart.classList.add('scale-95', 'bg-pink-50');
-      setTimeout(() => btnCart.classList.remove('scale-95', 'bg-pink-50'), 150);
+    function mostrarToast(nome) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <span class="text-pink-500 text-xl">🛍️</span>
+        <div>
+          <p class="text-sm font-bold text-gray-800">${nome}</p>
+          <p class="text-[11px] text-pink-500 font-medium">Adicionado ao carrinho! 🛒</p>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.add('toast-out');
+        setTimeout(() => toast.remove(), 400);
+      }, 2500);
+    }
 
-      if (!aberto) toggleCarrinho();
+    function removerDoCarrinhoTotal(nome) {
+      carrinho = carrinho.filter(item => item.nome !== nome);
+      salvarCarrinho();
+      renderizarProdutos();
     }
 
     function alterarQtd(index, delta) {
@@ -255,6 +547,7 @@
     function salvarCarrinho() {
       localStorage.setItem('carrinho_lays', JSON.stringify(carrinho));
       atualizarCarrinho();
+      renderizarProdutos(); // Sincroniza os cards dos produtos
     }
 
     function atualizarCarrinho() {
@@ -273,17 +566,17 @@
         soma += item.preco * item.qtd;
         itens += item.qtd;
         let li = document.createElement('li');
-        li.className = "bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-3";
+        li.className = "bg-white/50 backdrop-blur-md p-4 rounded-2xl shadow-sm border border-white/60 flex flex-col gap-3";
         li.innerHTML = `
       <div class="flex justify-between items-start">
-        <span class="font-semibold text-[15px] text-neutral-900">${item.nome}</span>
-        <span class="font-semibold text-[15px] text-neutral-900">R$ ${(item.preco * item.qtd).toFixed(2).replace('.', ',')}</span>
+        <span class="font-bold text-[15px] text-neutral-900">${item.nome}</span>
+        <span class="font-bold text-[15px] text-neutral-900">R$ ${(item.preco * item.qtd).toFixed(2).replace('.', ',')}</span>
       </div>
       <div class="flex justify-between items-center">
-        <div class="flex items-center bg-gray-100 rounded-full overflow-hidden p-0.5">
-          <button onclick="alterarQtd(${index}, -1)" class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-neutral-800 font-semibold active:scale-95 transition-transform">-</button>
-          <span class="w-8 text-center text-[15px] font-semibold text-neutral-900">${item.qtd}</span>
-          <button onclick="alterarQtd(${index}, 1)" class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-neutral-800 font-semibold active:scale-95 transition-transform">+</button>
+        <div class="flex items-center bg-white/60 rounded-full overflow-hidden p-0.5 border border-white/50">
+          <button onclick="alterarQtd(${index}, -1)" class="w-8 h-8 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-sm text-neutral-800 font-bold active:scale-95 transition-transform">-</button>
+          <span class="w-8 text-center text-[15px] font-bold text-neutral-900">${item.qtd}</span>
+          <button onclick="alterarQtd(${index}, 1)" class="w-8 h-8 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-full shadow-sm text-neutral-800 font-bold active:scale-95 transition-transform">+</button>
         </div>
         <button onclick="remover(${index})" class="text-[13px] font-medium text-red-500 hover:text-red-600 bg-red-50 px-3 py-1.5 rounded-full active:scale-95 transition-all">Remover</button>
       </div>`;
@@ -299,25 +592,83 @@
       }
     }
 
-    // --- Botão "Lugar dos Favoritos" ---
+    // --- Botão "Lugar dos Favoritos" (Agora Pop-up) ---
     function toggleAbaFavoritos() {
+      const modal = document.getElementById('favoritosModal');
       abaFavoritosAtiva = !abaFavoritosAtiva;
-      const btn = document.getElementById('btnFavoritos');
-      const titulo = document.getElementById('tituloFavoritos');
 
       if (abaFavoritosAtiva) {
-        btn.innerHTML = '← Loja';
-        btn.className = 'bg-red-500 text-white py-3 px-5 rounded-2xl shadow-sm border-none font-semibold hover:bg-red-600 transition active:scale-95 flex justify-center items-center gap-2 whitespace-nowrap text-[15px]';
-        titulo.classList.remove('hidden');
-
-        document.getElementById('busca').value = '';
-        document.getElementById('filtro').value = 'todos';
+        atualizarListaFavoritos();
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          modal.classList.remove('opacity-0');
+        }, 10);
       } else {
-        btn.innerHTML = '🤍 Favoritos';
-        btn.className = 'bg-gray-100/80 text-gray-800 py-3 px-5 rounded-2xl shadow-sm border-none font-semibold hover:bg-gray-200 transition active:scale-95 flex justify-center items-center gap-2 whitespace-nowrap text-[15px]';
-        titulo.classList.add('hidden');
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    function atualizarListaFavoritos() {
+      const lista = document.getElementById('listaFavoritos');
+      lista.innerHTML = '';
+
+      if (favoritos.length === 0) {
+        lista.innerHTML = `<div class="flex flex-col items-center justify-center py-10 text-gray-400">
+          <div class="text-5xl mb-4 opacity-50">♡</div>
+          <p class="text-base font-medium text-center px-4">Você ainda não favoritou nenhum laço.</p>
+        </div>`;
+        return;
       }
 
+      favoritos.forEach((nome) => {
+        const prod = produtosLoja.find(p => p.nome === nome);
+        if (!prod) return;
+
+        let div = document.createElement('div');
+        div.className = "bg-white/60 backdrop-blur-md p-4 rounded-3xl border border-white/60 flex items-center gap-4 shadow-sm";
+        div.innerHTML = `
+          <img src="${prod.imagem}" class="w-16 h-16 rounded-2xl object-cover shadow-sm bg-white" alt="${prod.nome}">
+          <div class="flex-grow">
+            <h3 class="font-bold text-neutral-900 text-sm truncate w-32 sm:w-40">${prod.nome}</h3>
+            <p class="text-pink-500 font-bold text-xs">R$ ${prod.preco.toFixed(2).replace('.', ',')}</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <button onclick="addCarrinho('${prod.nome}', ${prod.preco}, this)" class="bg-pink-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-sm active:scale-90 transition-transform">🛒</button>
+            <button onclick="removerFavoritoDoModal('${prod.nome}')" class="bg-white/80 text-red-500 w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-sm border border-red-100 active:scale-90 transition-transform">✕</button>
+          </div>
+        `;
+        lista.appendChild(div);
+      });
+    }
+
+    function removerFavoritoDoModal(nome) {
+      const index = favoritos.indexOf(nome);
+      if (index >= 0) favoritos.splice(index, 1);
+      localStorage.setItem('favoritos_lays', JSON.stringify(favoritos));
+      renderizarProdutos(); // Atualiza os corações na vitrine
+      atualizarListaFavoritos(); // Atualiza a lista no modal
+    }
+
+    // --- Dropdown Customizado ---
+    function toggleDropdown() {
+      const menu = document.getElementById('dropdownMenu');
+      const isVisible = !menu.classList.contains('opacity-0');
+      
+      if (isVisible) {
+        menu.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+      } else {
+        menu.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+      }
+    }
+
+    function selectOption(valor, texto) {
+      const inputFiltro = document.getElementById('filtro');
+      inputFiltro.value = valor;
+      document.getElementById('selectedOption').innerText = texto;
+      toggleDropdown();
       filtrar();
     }
 
@@ -328,14 +679,9 @@
 
       document.querySelectorAll('.produto').forEach(p => {
         let nomeData = p.dataset.nome;
-        let tituloProduto = p.querySelector('h2').innerText;
-
         let okBusca = nomeData.includes(busca);
         let okFiltro = filtro === 'todos' || p.dataset.tipo === filtro;
-
-        let okFavorito = abaFavoritosAtiva ? favoritos.includes(tituloProduto) : true;
-
-        p.style.display = (okBusca && okFiltro && okFavorito) ? 'block' : 'none';
+        p.style.display = (okBusca && okFiltro) ? 'block' : 'none';
       });
     }
 
@@ -346,13 +692,13 @@
 
       if (index >= 0) {
         favoritos.splice(index, 1);
-        coracao.innerText = '🤍';
+        coracao.innerText = '♡';
         coracao.classList.remove('text-red-500');
-        coracao.classList.add('text-gray-300');
+        coracao.classList.add('text-gray-500');
       } else {
         favoritos.push(nomeProduto);
         coracao.innerText = '❤️';
-        coracao.classList.remove('text-gray-300');
+        coracao.classList.remove('text-gray-500');
         coracao.classList.add('text-red-500');
       }
 
@@ -386,23 +732,52 @@
       section.innerHTML = '';
       produtosLoja.forEach(prod => {
         const isFav = favoritos.includes(prod.nome);
-        const coracaoIcon = isFav ? '❤️' : '🤍';
-        const coracaoCor = isFav ? 'text-red-500' : 'text-gray-300';
+        const itemNoCarrinho = carrinho.find(item => item.nome === prod.nome);
+        const coracaoIcon = isFav ? '❤️' : '♡';
+        const coracaoCor = isFav ? 'text-red-500' : 'text-gray-500 text-[26px] leading-[26px] flex justify-center items-center mt-[-4px]';
+
+        let botaoHtml = '';
+        if (itemNoCarrinho) {
+          // Seletor de Quantidade
+          botaoHtml = `
+            <div class="flex items-center justify-between gap-2 bg-pink-50 rounded-[20px] p-1 border border-pink-100 shadow-sm animate-in fade-in zoom-in duration-300">
+              <button onclick="alterarQtdNoCard('${prod.nome}', -1)" class="w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-sm text-pink-600 font-bold active:scale-90 transition-transform">－</button>
+              <span class="font-bold text-pink-600 text-lg">${itemNoCarrinho.qtd}</span>
+              <button onclick="alterarQtdNoCard('${prod.nome}', 1)" class="w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-sm text-pink-600 font-bold active:scale-90 transition-transform">＋</button>
+              <button onclick="removerDoCarrinhoTotal('${prod.nome}')" class="ml-1 w-10 h-10 flex items-center justify-center bg-red-500 text-white rounded-full shadow-sm active:scale-95 transition-transform">✕</button>
+            </div>`;
+        } else {
+          // Botão Adicionar Normal
+          botaoHtml = `<button onclick="addCarrinho('${prod.nome}', ${prod.preco}, this)" class="bg-pink-500/90 backdrop-blur-sm border border-pink-400 hover:bg-pink-500 active:bg-pink-600 active:scale-95 transition-all text-white font-semibold py-3.5 px-6 rounded-[20px] w-full text-[15px] shadow-md">Adicionar</button>`;
+        }
 
         section.innerHTML += `
-          <div class="produto bg-white p-4 rounded-[28px] shadow-ios border border-gray-100/50 relative group transition-transform hover:-translate-y-1" data-nome="${prod.nome.toLowerCase()}" data-tipo="${prod.tipo}">
-            <button onclick="toggleFavorito(this, '${prod.nome}')" class="absolute top-5 right-5 text-xl p-2 bg-white/80 backdrop-blur rounded-full hover:scale-110 active:scale-90 transition-transform focus:outline-none z-10 shadow-sm"><span class="coracao ${coracaoCor}">${coracaoIcon}</span></button>
-            <div class="h-40 bg-pink-50/50 rounded-[20px] mb-4 overflow-hidden cursor-pointer" onclick="abrirImagem('${prod.imagem}')">
-              <img src="${prod.imagem}" alt="${prod.nome}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+          <div class="produto produto-glass bg-white/60 backdrop-blur-xl p-3 sm:p-5 rounded-[40px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/80 relative group" data-nome="${prod.nome.toLowerCase()}" data-tipo="${prod.tipo}">
+            <button onclick="toggleFavorito(this, '${prod.nome}')" class="absolute top-5 right-5 sm:top-7 sm:right-7 w-11 h-11 flex items-center justify-center bg-white/80 backdrop-blur-md rounded-full border border-white/50 hover:scale-110 active:scale-90 transition-transform focus:outline-none z-10 shadow-sm">
+              <span class="coracao ${coracaoCor}">${coracaoIcon}</span>
+            </button>
+            <div class="w-full mb-4 overflow-hidden cursor-pointer rounded-[24px] bg-white/30 border border-white/40 flex items-center justify-center" onclick="abrirImagem('${prod.imagem}')">
+              <img src="${prod.imagem}" alt="${prod.nome}" class="w-full h-auto block hover:scale-105 transition-transform duration-500">
             </div>
-            <div class="px-1">
-              <h2 class="font-bold text-neutral-900 text-lg tracking-tight mb-1 truncate">${prod.nome}</h2>
-              <p class="text-neutral-500 text-sm font-medium mb-4">R$ ${prod.preco.toFixed(2).replace('.', ',')}</p>
-              <button onclick="addCarrinho('${prod.nome}', ${prod.preco})" class="bg-gray-900 hover:bg-black active:bg-gray-800 active:scale-95 transition-all text-white font-semibold py-3 px-6 rounded-xl w-full text-[15px] shadow-sm">Adicionar</button>
+            <div class="px-2 pb-1">
+              <h2 class="font-extrabold text-neutral-900 text-[17px] tracking-tight mb-1 truncate">${prod.nome}</h2>
+              <p class="text-neutral-600 text-[15px] font-medium mb-4">R$ ${prod.preco.toFixed(2).replace('.', ',')}</p>
+              ${botaoHtml}
             </div>
-          </div>
-        `;
+          </div>`;
       });
+    }
+
+    function alterarQtdNoCard(nome, delta) {
+      const index = carrinho.findIndex(item => item.nome === nome);
+      if (index >= 0) {
+        carrinho[index].qtd += delta;
+        if (carrinho[index].qtd <= 0) {
+          carrinho.splice(index, 1);
+        }
+      }
+      salvarCarrinho();
+      renderizarProdutos();
     }
 
     // --- Máscara de Telefone ---
@@ -414,20 +789,193 @@
       input.value = num;
     }
 
+    function formatarCEP(input) {
+      let v = input.value.replace(/\D/g, '');
+      if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5, 8);
+      input.value = v;
+      if (v === "") {
+        document.getElementById('cidade_uf').value = "";
+        document.getElementById('rua_bairro').value = "";
+      }
+      validarCampos();
+    }
+
+    function aoMudarCidade() {
+      const cidade = document.getElementById('cidade_uf').value;
+      const cepInput = document.getElementById('cep');
+      const ruaInput = document.getElementById('rua_bairro');
+      // Se mudar a cidade manualmente, limpamos o CEP e Rua que não pertencem mais
+      if (cidade !== "" && !cidade.includes("buscando")) {
+        cepInput.value = "";
+        ruaInput.value = "";
+      }
+      validarCampos();
+    }
+
+    // --- Validação Real-time do Botão ---
+    function validarCampos() {
+      const nome = document.getElementById('nome_cliente');
+      const cep = document.getElementById('cep');
+      const cid = document.getElementById('cidade_uf');
+      const rua = document.getElementById('rua_bairro');
+      const num = document.getElementById('numero');
+      
+      const isNomeOk = nome.value.length > 2;
+      const isCepOk = cep.value.length === 9;
+      const isCidOk = cid.value !== "";
+      const isRuaOk = rua.value.length > 4;
+      const isNumOk = num.value.length >= 1;
+
+      // Limpa erro ao digitar
+      [nome, cep, cid, rua, num].forEach(el => {
+        el.addEventListener('input', () => el.classList.remove('field-error'));
+      });
+      
+      const btn = document.getElementById('btnFinalizar');
+      if (isNomeOk && isCepOk && isCidOk && isRuaOk && isNumOk) {
+        // Estado Ativo / Destacado
+        btn.classList.remove('bg-pink-300');
+        btn.classList.add('bg-pink-600', 'hover:bg-pink-700', 'active:scale-95', 'shadow-md');
+      } else {
+        // Estado Padrão / Apagado
+        btn.classList.add('bg-pink-300');
+        btn.classList.remove('bg-pink-600', 'hover:bg-pink-700', 'active:scale-95', 'shadow-md');
+      }
+    }
+
+    function showError(msg, fields) {
+      const modal = document.getElementById('errorModal');
+      document.getElementById('errorMsg').innerText = msg;
+      
+      // Destaca os campos
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('field-error');
+      });
+      
+      modal.classList.remove('hidden');
+      // Pequeno delay para a animação de opacidade
+      setTimeout(() => {
+        modal.classList.add('opacity-100');
+        modal.querySelector('div').classList.add('scale-100');
+      }, 10);
+    }
+
+    function closeErrorModal() {
+      const modal = document.getElementById('errorModal');
+      modal.classList.remove('opacity-100');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    // Adiciona ouvintes para validar em tempo real
+    document.addEventListener('DOMContentLoaded', () => {
+      ['nome_cliente', 'cep', 'rua_bairro', 'numero'].forEach(id => {
+        document.getElementById(id).addEventListener('input', validarCampos);
+      });
+      document.getElementById('cidade_uf').addEventListener('change', validarCampos);
+    });
+
+    // --- Integração CEP (ViaCEP) ---
+    async function buscarCEP(valor) {
+      if (!valor) return;
+      const cep = valor.replace(/\D/g, '').trim();
+      const campoRua = document.getElementById('rua_bairro');
+      const campoCidade = document.getElementById('cidade_uf');
+      
+      if (cep.length === 8) {
+        // Feedback visual de carregamento
+        const loadingOption = document.createElement('option');
+        loadingOption.id = "temp_loading";
+        loadingOption.value = "buscando";
+        loadingOption.text = "Buscando...";
+        campoCidade.add(loadingOption);
+        campoCidade.value = "buscando";
+
+        try {
+          const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+          const data = await response.json();
+          
+          document.getElementById('temp_loading')?.remove();
+
+          if (!data.erro) {
+            if (data.uf !== 'ES') {
+              showError("Desculpe, realizamos entregas apenas no Espírito Santo!", ['cep']);
+              campoCidade.value = "";
+              document.getElementById('cep').value = "";
+              return;
+            }
+
+            campoRua.value = `${data.logradouro}${data.logradouro ? ', ' : ''}${data.bairro}`;
+            
+            // Verifica se a cidade do CEP existe no select, se não, adiciona
+            const cidadeUF = `${data.localidade} / ${data.uf}`;
+            let opExists = false;
+            for(let i=0; i<campoCidade.options.length; i++){
+              if(campoCidade.options[i].value === cidadeUF) opExists = true;
+            }
+            if(!opExists){
+              const newOp = new Option(cidadeUF, cidadeUF);
+              campoCidade.add(newOp);
+            }
+            campoCidade.value = cidadeUF;
+            
+            // Foca no próximo campo
+            setTimeout(() => campoRua.focus(), 100);
+            validarCampos();
+          } else {
+            campoCidade.value = "";
+            showError("CEP não encontrado!", ['cep']);
+            validarCampos();
+          }
+        } catch (error) {
+          document.getElementById('temp_loading')?.remove();
+          campoCidade.value = "";
+          showError("Erro na conexão ao buscar o CEP.", ['cep']);
+          validarCampos();
+        }
+      }
+    }
+
     function finalizarCompra() {
       if (carrinho.length === 0) return alert("Seu carrinho está vazio!");
 
-      let telefone = document.getElementById('telefone').value;
-      let endereco = document.getElementById('endereco').value;
+      const nomeCl = document.getElementById('nome_cliente');
+      const cep = document.getElementById('cep');
+      const rua = document.getElementById('rua_bairro');
+      const cid = document.getElementById('cidade_uf');
+      const num = document.getElementById('numero');
+      const comp = document.getElementById('complemento');
+
+      const faltantes = [];
+      const idsFaltantes = [];
+      
+      if (nomeCl.value.length < 3) { faltantes.push("Seu Nome"); idsFaltantes.push('nome_cliente'); }
+      if (cep.value.length < 9) { faltantes.push("CEP"); idsFaltantes.push('cep'); }
+      if (!cid.value) { faltantes.push("Cidade"); idsFaltantes.push('cidade_uf'); }
+      if (rua.value.length < 4) { faltantes.push("Rua/Bairro"); idsFaltantes.push('rua_bairro'); }
+      if (!num.value) { faltantes.push("Número"); idsFaltantes.push('numero'); }
+
+      if (faltantes.length > 0) {
+        showError("Por favor, preencha os campos destacados em vermelho para continuar.", idsFaltantes);
+        return;
+      }
 
       let msg = `*🛍️ Pedido Laços da Lays*%0A%0A`;
+      msg += `👤 *Cliente:* ${nomeCl.value}%0A%0A`;
+      
+      msg += `*Produtos:*%0A`;
       carrinho.forEach(i => {
         msg += `• ${i.qtd}x ${i.nome} - R$ ${(i.preco * i.qtd).toFixed(2).replace('.', ',')}%0A`;
       });
 
       msg += `%0A💰 *Total:* R$ ${document.getElementById('total').innerText}`;
-      if (telefone) msg += `%0A📱 *Telefone Ctt:* ${telefone}`;
-      msg += `%0A📍 *Endereço:* ${endereco || 'A combinar / Retirada'}`;
+      
+      msg += `%0A%0A📍 *Endereço de Entrega:*`;
+      msg += `%0A🏙️ ${cid.value}`;
+      msg += `%0A🏘️ ${rua.value}`;
+      msg += `%0A🔢 Nº: ${num.value}`;
+      if (comp.value) msg += `%0A🏢 Complemento: ${comp.value}`;
+      msg += `%0A📫 CEP: ${cep.value}`;
 
       window.open(`https://wa.me/5527998346411?text=${msg}`);
     }
@@ -457,15 +1005,102 @@
       }, 300);
     }
 
+    // --- Reações Estilo Live Instagram ---
+    function criarReacaoAoVivo() {
+      const emojis = ['❤️', '😍', '✨', '🎀', '👏', '💖', '🥰', '🎈'];
+      const area = document.getElementById('reactionArea');
+      if (!area) return;
+
+      const reaction = document.createElement('div');
+      reaction.className = 'live-reaction';
+      reaction.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      // Posição horizontal aleatória
+      const xPos = Math.random() * 80 + 10; // 10% a 90% da largura
+      reaction.style.left = xPos + '%';
+      
+      // Varíavel de drift (desvio lateral para o efeito flutuação)
+      const drift = (Math.random() - 0.5) * 60 + 'px';
+      reaction.style.setProperty('--drift', drift);
+      
+      area.appendChild(reaction);
+      
+      // Limpa após a animação
+      setTimeout(() => reaction.remove(), 3000);
+    }
+    
+    // Dispara reações periodicamente
+    setInterval(criarReacaoAoVivo, 800);
+
     // --- Start ---
     document.addEventListener('DOMContentLoaded', () => {
       renderizarProdutos();
       atualizarCarrinho();
 
-      // Fechar modal ao clicar fora da imagem
-      document.getElementById('imageModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          fecharImagem();
+      // Ouvintes para validar em tempo real
+      ['nome_cliente', 'cep', 'rua_bairro', 'numero'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', validarCampos);
+      });
+      const cidSelect = document.getElementById('cidade_uf');
+      if (cidSelect) cidSelect.addEventListener('change', validarCampos);
+
+      // Fechar modais ao clicar fora
+      window.addEventListener('click', function(e) {
+        const modalFav = document.getElementById('favoritosModal');
+        const modalImg = document.getElementById('imageModal');
+        const dropdownCont = document.getElementById('dropdownContainer');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        
+        if (e.target === modalFav) toggleAbaFavoritos();
+        if (e.target === modalImg) fecharImagem();
+        
+        // Fechar dropdown se clicar fora dele
+        if (!dropdownCont.contains(e.target)) {
+          dropdownMenu.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+        }
+      });
+
+      // Botão Flutuante
+      window.addEventListener('scroll', () => {
+        const fab = document.getElementById('fabBtn');
+        if (window.scrollY > 300) {
+          fab.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+          fab.classList.add('opacity-100', 'translate-y-0');
+        } else {
+          fab.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+          fab.classList.remove('opacity-100', 'translate-y-0');
+        }
+      });
+
+      // Efeito Varinha Mágica (Sparkles)
+      document.addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.4) { // Criando mais fragmentos (mais frequente)
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          
+          // Tamanho aleatório (um pouco maiores e variados)
+          const size = Math.random() * 10 + 2 + 'px';
+          sparkle.style.width = size;
+          sparkle.style.height = size;
+          
+          // Posição do mouse com uma pequena variação para espalhar
+          const offsetX = (Math.random() - 0.5) * 20;
+          const offsetY = (Math.random() - 0.5) * 20;
+          sparkle.style.left = (e.clientX + offsetX) + 'px';
+          sparkle.style.top = (e.clientY + offsetY) + 'px';
+          
+          // Cor aleatória (Branco, Rosa ou Dourado)
+          const colors = ['#fff', '#f472b6', '#fbbf24', '#ffeb3b'];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          sparkle.style.background = color;
+          sparkle.style.boxShadow = `0 0 15px ${color}, 0 0 30px ${color}`;
+
+          document.body.appendChild(sparkle);
+          
+          // Tempo de vida um pouco mais longo para alguns
+          const duration = Math.random() * 500 + 700;
+          setTimeout(() => sparkle.remove(), duration);
         }
       });
     });
